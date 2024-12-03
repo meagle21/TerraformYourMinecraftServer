@@ -66,7 +66,7 @@ variable LAMBDA_PATH {
 }
 
 variable LAMBDA_NAME {
-    default = "server_monitoring.py"
+    default = "vpc_monitoring.py"
     type = string
 }
 
@@ -76,12 +76,12 @@ variable ZIP {
 }
 
 variable LAMBDA_FUNCTION_HANDLER_NAME {
-    default = "server_monitoring"
+    default = "vpc_monitoring"
     type = string
 }
 
 variable LAMBDA_FUNCTION_NAME {
-    default = "mc_server_monitoring_lambda"
+    default = "mc_vpc_monitoring_lambda"
     type = string
 }
 
@@ -95,6 +95,16 @@ variable LAMBDA_PERMISSIONS {
                "ec2:DescribeRegions", "ec2:StopInstances", "ec2:TerminateInstances"
               ]
     type = list(string)
+}
+
+variable CLOUDWATCH_LOG_GROUP {
+    default = "mc_vpc_logs_group"
+    type = string
+}
+
+variable LOG_STREAM_NAME {
+    default = "mc_vpc_stream"
+    type = string
 }
 
 
