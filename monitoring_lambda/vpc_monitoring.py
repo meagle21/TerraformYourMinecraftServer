@@ -1,14 +1,12 @@
 import boto3
 import os
 
-def server_monitoring(event, context):
-    log_group_name = 'your-cloudwatch-log-group'
-    log_stream_name = 'your-log-stream-name'
+def vpc_monitoring(event, context):
     client = boto3.client('logs')
 
     response = client.get_log_events(
-        logGroupName = os.environ[""],
-        logStreamName = os.environ[""],
+        logGroupName = os.environ["CLOUDWATCH_LOG_GROUP"],
+        logStreamName = os.environ["LOG_STREAM_NAME"],
         limit=10
     )
 

@@ -47,18 +47,25 @@ resource "aws_security_group" "mc_vpc_security_group" {
 # }
 
 // Lambda
-resource "aws_lambda_function" "test_lambda" {
+resource "aws_lambda_function" "vpc_logs_monitoring_lambda" {
   filename      = data.archive_file.lambda_zip.output_path
   function_name = var.LAMBDA_FUNCTION_NAME
-  role          = aws_iam_role.mc_server_monitoring_lambda.arn
+  role          = aws_iam_role.mc_vpc_monitoring_lambda.arn
   handler       = var.LAMBDA_FUNCTION_HANDLER_NAME
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
   runtime = var.LAMBDA_RUNTIME_VERSION
+
+   environment {
+    variables = {
+      CLOUDWATCH_LOG_GROUP = var.CLOUDWATCH_LOG_GROUP
+      LOG_STREAM_NAME = var.LOG_STREAM_NAME
+    }
+  }
 }
 
 // Lambda role to monitor EC2 instance
-resource "aws_iam_role" "mc_server_monitoring_lambda" {
-  name               = "mc_server_monitoring_lambda"
+resource "aws_iam_role" "mc_vpc_monitoring_lambda" {
+  name               = "mc_vpc_monitoring_lambda"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -74,14 +81,14 @@ resource "aws_iam_role" "mc_server_monitoring_lambda" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_server_monitoring_policy_attachment" {
-  role       = aws_iam_role.mc_server_monitoring_lambda.name
-  policy_arn = aws_iam_policy.lambda_server_monitoring_policy.arn
+resource "aws_iam_role_policy_attachment" "lambda_vpc_monitoring_policy_attachment" {
+  role       = aws_iam_role.mc_vpc_monitoring_lambda.name
+  policy_arn = aws_iam_policy.lambda_vpc_monitoring_policy.arn
 }
 
 // Lambda Role policy to monitor EC2 instance to shut down
-resource "aws_iam_policy" "lambda_server_monitoring_policy" {
-  name        = "LambdaServerMonitoringPolicy"
+resource "aws_iam_policy" "lambda_vpc_monitoring_policy" {
+  name        = "LambdaVPCMonitoringPolicy"
   description = "Policy that allows Lambda to read data and shut down EC2 instances"
   policy      = jsonencode({
     Version = "2012-10-17"

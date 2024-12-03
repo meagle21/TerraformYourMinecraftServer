@@ -9,11 +9,11 @@ data "aws_ami" "MC_AMI" {
 }
 
 locals {
-    SERVER_MONITORING_ARCHIVE = replace(var.LAMBDA_NAME, "py", "zip")
+    VPC_MONITORING_ARCHIVE = replace(var.LAMBDA_NAME, "py", "zip")
 }
 
 data "archive_file" "lambda_zip" {
   type        = var.ZIP
   source_dir  = "../${var.LAMBDA_PATH}"  # Path to the folder with your Python code
-  output_path = "${path.module}/${local.SERVER_MONITORING_ARCHIVE}"  # Path to save the generated ZIP
+  output_path = "${path.module}/${local.VPC_MONITORING_ARCHIVE}"  # Path to save the generated ZIP
 }
