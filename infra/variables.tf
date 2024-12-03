@@ -46,7 +46,7 @@ variable EBS_SNAPSHOT_STORAGE_TIER {
 }
 
 variable AMI_OWNER_NAME {
-    default = "amazon"
+    default = ["amazon"]
     type = list(string)
 }
 
