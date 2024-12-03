@@ -36,7 +36,7 @@ variable MINECRAFT_SERVER_PORT {
 }
 
 variable EBS_DEVICE_NAME {
-    default = "/ebs/vol"
+    default = "/dev/sdh"
     type = string
 }
 
