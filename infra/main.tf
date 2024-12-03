@@ -52,7 +52,7 @@ resource "aws_lambda_function" "test_lambda" {
   function_name = var.LAMBDA_FUNCTION_NAME
   role          = aws_iam_role.mc_server_monitoring_lambda.arn
   handler       = var.LAMBDA_FUNCTION_HANDLER_NAME
-  source_code_hash = data.archive_file.lambda.output_base64sha256
+  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
   runtime = var.LAMBDA_RUNTIME_VERSION
 }
 
