@@ -20,6 +20,7 @@ resource "aws_security_group" "mc_vpc_security_group" {
     }
 }
 
+
 resource "aws_subnet" "mc_vpc_subnet" {
   vpc_id     = aws_vpc.mc_vpc.id
   cidr_block = var.SUBNET_CIDR_BLOCK
@@ -73,7 +74,7 @@ resource "aws_lambda_function" "vpc_logs_monitoring_lambda" {
   }
 }
 
-// Lambda role to monitor EC2 instance
+// Lambda role to monitor VPC
 resource "aws_iam_role" "mc_vpc_monitoring_lambda" {
   name               = "mc_vpc_monitoring_lambda"
   assume_role_policy = jsonencode({
@@ -96,7 +97,7 @@ resource "aws_iam_role_policy_attachment" "lambda_vpc_monitoring_policy_attachme
   policy_arn = aws_iam_policy.lambda_vpc_monitoring_policy.arn
 }
 
-// Lambda Role policy to monitor EC2 instance to shut down
+// Lambda Role policy to monitor VPC logs to shut down
 resource "aws_iam_policy" "lambda_vpc_monitoring_policy" {
   name        = "LambdaVPCMonitoringPolicy"
   description = "Policy that allows Lambda to read data and shut down EC2 instances"
