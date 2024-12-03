@@ -12,5 +12,4 @@
 ## Usage
 
 ## What the System Looks Like:
-![image](system_architecture.drawio.png)
 
