@@ -96,8 +96,8 @@ variable LAMBDA_RUNTIME_VERSION {
 }
 
 variable LAMBDA_PERMISSIONS {
-    default = ["logs:DescribeLogGroups", "logs:DescribeLogStreams", "logs:GetLogEvents", 
-              "ec2:DescribeNetworkInterfaces", "ec2:DescribeInstances", "ec2:DescribeSecurityGroups"]
+    default = ["logs:DescribeLogGroups", "logs:DescribeLogStreams", "logs:GetLogEvents", "ec2:CreateNetworkInterface",
+              "ec2:DescribeNetworkInterfaces", "ec2:DescribeInstances", "ec2:DescribeSecurityGroups", "ec2:DeleteNetworkInterface"]
     type = list(string)
 }
 

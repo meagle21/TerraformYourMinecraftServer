@@ -34,6 +34,11 @@ resource "aws_subnet" "mc_vpc_subnet" {
 #   instance_type     = var.instance_type
 # }
 
+# resource "aws_cloudwatch_log_group" "mc_server_logs" {
+#   name = "MC-server-log-group"
+#   retention_in_days = 7
+# }
+
 # // EBS Volume
 # resource "aws_ebs_volume" "mc_ebs_volume" {
 #   availability_zone = var.default_region
@@ -131,3 +136,5 @@ resource "aws_lambda_permission" "allow_eventbridge_invoke" {
   function_name = aws_lambda_function.vpc_logs_monitoring_lambda.function_name
   source_arn    = aws_cloudwatch_event_rule.vpc_monitoring_rule.arn
 }
+
+// ECS for Grafana
