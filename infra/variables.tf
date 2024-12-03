@@ -95,7 +95,7 @@ variable LAMBDA_RUNTIME_VERSION {
     type = string
 }
 
-variable LAMBDA_PERMISSIONS {
+variable LAMBDA_EXECUTE_PERMISSIONS {
     default = ["logs:DescribeLogGroups", "logs:DescribeLogStreams", "logs:GetLogEvents", "ec2:CreateNetworkInterface",
               "ec2:DescribeNetworkInterfaces", "ec2:DescribeInstances", "ec2:DescribeSecurityGroups", "ec2:DeleteNetworkInterface"]
     type = list(string)
@@ -111,7 +111,50 @@ variable LOG_STREAM_NAME {
     type = string
 }
 
+variable MONITORING_LAMBDA_RUN_FREQUENCY {
+    default = "rate(5 minutes)"
+    type = string
+}
 
+variable MONITORING_LAMBDA_RUN_FREQUENCY_RULE_NAME {
+    type = string
+    default = "vpc-active-connections-monitoring-lambda-rule"
+}
 
+variable EVENTBRIDGE_ACTION_TO_INVOKE_LAMBDA {
+    type = string
+    default = "lambda:InvokeFunction"
+}
 
+variable EVENTBRIDGE_PRINCIPAL_URL {
+    type = string
+    default = "events.amazonaws.com"
+}
 
+variable VPC_SECURITY_GROUP_CIDR_BLOCKS {
+    type = list(string)
+    default = ["0.0.0.0/0"]
+}
+
+variable SECURITY_GROUP_PROTOCOL {
+    type = string
+    default = "tcp"
+}
+
+variable VPC_MONITORING_LAMBDA_ROLE_NAME {
+    default = "mc_vpc_monitoring_lambda"
+    type = string
+}
+
+variable LAMBDA_LOGGING_PERMISSIONS {
+    default = ["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents"]
+    type = list(string)
+}
+
+variable LOGS_ARN_WILDCARD {
+    default = "arn:aws:logs:*:*:*"
+}
+
+variable LOGS_GROUP_PATH {
+    default = "/aws/lambda/my_lambda_function"
+}
