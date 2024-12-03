@@ -30,6 +30,11 @@ variable CIDR_BLOCK {
     type = string
 }
 
+variable SUBNET_CIDR_BLOCK {
+    default = "10.0.0.0/28"
+    type = string
+}
+
 variable MINECRAFT_SERVER_PORT {
     default = 25565
     type = number
@@ -91,9 +96,8 @@ variable LAMBDA_RUNTIME_VERSION {
 }
 
 variable LAMBDA_PERMISSIONS {
-    default = ["ec2:DescribeInstances", "ec2:DescribeInstanceStatus",
-               "ec2:DescribeRegions", "ec2:StopInstances", "ec2:TerminateInstances"
-              ]
+    default = ["logs:DescribeLogGroups", "logs:DescribeLogStreams", "logs:GetLogEvents", 
+              "ec2:DescribeNetworkInterfaces", "ec2:DescribeInstances", "ec2:DescribeSecurityGroups"]
     type = list(string)
 }
 

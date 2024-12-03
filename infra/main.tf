@@ -20,11 +20,11 @@ resource "aws_security_group" "mc_vpc_security_group" {
     }
 }
 
-// VPC cloudwatch logs group
 
-// VPC cloudwatch flow logs
-
-// VPC IAM Role to generate logs and attach to vpc 
+resource "aws_subnet" "mc_vpc_subnet" {
+  vpc_id     = aws_vpc.mc_vpc.id
+  cidr_block = var.SUBNET_CIDR_BLOCK
+}
 
 # // EC2 Instance
 # resource "aws_instance" "mc_instance" {
@@ -67,6 +67,11 @@ resource "aws_lambda_function" "vpc_logs_monitoring_lambda" {
       LOG_STREAM_NAME = var.LOG_STREAM_NAME
     }
   }
+
+  vpc_config {
+    subnet_ids = [aws_subnet.mc_vpc_subnet.id]
+    security_group_ids = [aws_security_group.mc_vpc_security_group.id]
+  }
 }
 
 // Lambda role to monitor VPC
@@ -108,8 +113,20 @@ resource "aws_iam_policy" "lambda_vpc_monitoring_policy" {
   })
 }
 
-# // Everbridge
+resource "aws_cloudwatch_event_rule" "vpc_monitoring_rule" {
+  name                = "vpc-active-connections-monitoring-lambda-rule"
+  schedule_expression = "rate(5 minutes)"
+}
 
-# // Everbridge Role to Launch Lambda
+resource "aws_cloudwatch_event_target" "lambda_target" {
+  rule      = aws_cloudwatch_event_rule.vpc_monitoring_rule.name
+  target_id = "lambda-target"
+  arn       = aws_lambda_function.vpc_logs_monitoring_lambda.arn
+}
 
-# // Everbridge Role Policy to Launch Lambda
+resource "aws_lambda_permission" "allow_eventbridge_invoke" {
+  action        = "lambda:InvokeFunction"
+  principal     = "events.amazonaws.com"
+  function_name = aws_lambda_function.vpc_logs_monitoring_lambda.function_name
+  source_arn    = aws_cloudwatch_event_rule.vpc_monitoring_rule.arn
+}
