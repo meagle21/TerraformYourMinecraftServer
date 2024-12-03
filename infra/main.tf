@@ -20,6 +20,12 @@ resource "aws_security_group" "mc_vpc_security_group" {
     }
 }
 
+// VPC cloudwatch logs group
+
+// VPC cloudwatch flow logs
+
+// VPC IAM Role to generate logs and attach to vpc 
+
 # // EC2 Instance
 # resource "aws_instance" "mc_instance" {
 #   ami               = data.aws_ami.MC_AMI
@@ -63,7 +69,7 @@ resource "aws_lambda_function" "vpc_logs_monitoring_lambda" {
   }
 }
 
-// Lambda role to monitor EC2 instance
+// Lambda role to monitor VPC
 resource "aws_iam_role" "mc_vpc_monitoring_lambda" {
   name               = "mc_vpc_monitoring_lambda"
   assume_role_policy = jsonencode({
@@ -86,7 +92,7 @@ resource "aws_iam_role_policy_attachment" "lambda_vpc_monitoring_policy_attachme
   policy_arn = aws_iam_policy.lambda_vpc_monitoring_policy.arn
 }
 
-// Lambda Role policy to monitor EC2 instance to shut down
+// Lambda Role policy to monitor VPC logs to shut down
 resource "aws_iam_policy" "lambda_vpc_monitoring_policy" {
   name        = "LambdaVPCMonitoringPolicy"
   description = "Policy that allows Lambda to read data and shut down EC2 instances"
