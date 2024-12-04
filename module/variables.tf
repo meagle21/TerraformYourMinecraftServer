@@ -55,11 +55,6 @@ variable AMI_OWNER_NAME {
     type = list(string)
 }
 
-variable MOST_RECENT_BOOLEAN {
-    default = true
-    type = bool
-}
-
 variable INCLUDE_DEPRECATION_BOOLEAN {
     default = false
     type = bool
