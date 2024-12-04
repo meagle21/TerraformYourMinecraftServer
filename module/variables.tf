@@ -30,6 +30,11 @@ variable CIDR_BLOCK {
     type = string
 }
 
+variable default_az {
+    default = "${var.default_region}a"
+    type = string
+}
+
 variable SUBNET_CIDR_BLOCK {
     default = "10.0.0.0/28"
     type = string
