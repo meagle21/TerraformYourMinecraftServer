@@ -3,7 +3,3 @@ output "server_ip_for_minecraft_console" {
   value       = "${aws_instance.mc_instance.public_ip}:${var.MINECRAFT_SERVER_PORT}"
 }
 
-output "selected_ami_id" {
-  description = "The ID of the most recent Amazon Linux 2 AMI"
-  value       = data.aws_ami.MC_AMI.id
-}
