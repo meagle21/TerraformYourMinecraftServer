@@ -6,10 +6,6 @@ data "aws_ami" "MC_AMI" {
         name   = "name" 
         values = ["amzn2-ami-hvm-*-x86_64-gp2"]
     }
-    filter {
-        name   = "block-device-mapping.volume-size" 
-        values = [var.storage_volume_size]
-    }
 }
 
 locals {
