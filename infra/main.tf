@@ -63,7 +63,7 @@ resource "aws_lambda_function" "vpc_logs_monitoring_lambda" {
   filename      = data.archive_file.lambda_zip.output_path
   function_name = var.LAMBDA_FUNCTION_NAME
   role          = aws_iam_role.mc_vpc_monitoring_lambda.arn
-  handler       = var.LAMBDA_FUNCTION_HANDLER_NAME
+  handler       = "${var.LAMBDA_FUNCTION_NAME}.${var.LAMBDA_FUNCTION_HANDLER_NAME}"
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
   runtime = var.LAMBDA_RUNTIME_VERSION
 
