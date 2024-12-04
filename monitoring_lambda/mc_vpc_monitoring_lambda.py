@@ -9,10 +9,7 @@ def vpc_monitoring_handler(event, context):
         logStreamName = os.environ["LOG_STREAM_NAME"],
         limit=10
     )
-
-    for event in response['events']:
-        print(event['message'])
     return {
         'statusCode': 200,
-        'body': "Success"
+        'body': response['events']
     }
