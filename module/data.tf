@@ -1,7 +1,7 @@
 data "aws_ami" "MC_AMI" {
-    owners = var.AMI_OWNER_NAME
+    owners = ["amazon"]
     most_recent = true
-    include_deprecated = var.INCLUDE_DEPRECATION_BOOLEAN
+    include_deprecated = false
     filter {
         name   = "name" 
         values = ["amzn2-ami-hvm-*-x86_64-gp2"]
