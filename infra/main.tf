@@ -27,36 +27,38 @@ resource "aws_subnet" "mc_vpc_subnet" {
   cidr_block = var.SUBNET_CIDR_BLOCK
 }
 
-# // EC2 Instance
-# resource "aws_instance" "mc_instance" {
-#   ami               = data.aws_ami.MC_AMI
-#   availability_zone = var.default_region
-#   instance_type     = var.instance_type
-# }
+// EC2 Instance
+resource "aws_instance" "mc_instance" {
+  ami               = data.aws_ami.MC_AMI
+  availability_zone = var.default_region
+  instance_type     = var.instance_type
+  subnet_id = aws_subnet.mc_vpc_subnet.id
+  hibernation = true
+}
 
-# resource "aws_cloudwatch_log_group" "mc_server_logs" {
-#   name = "MC-server-log-group"
-#   retention_in_days = 7
-# }
+resource "aws_cloudwatch_log_group" "mc_server_logs" {
+  name = "MC-server-log-group"
+  retention_in_days = 7
+}
 
-# // EBS Volume
-# resource "aws_ebs_volume" "mc_ebs_volume" {
-#   availability_zone = var.default_region
-#   size              = var.storage_volume_size
-# }
+// EBS Volume
+resource "aws_ebs_volume" "mc_ebs_volume" {
+  availability_zone = var.default_region
+  size              = var.storage_volume_size
+}
 
-# // EBS Volume attachment
-# resource "aws_volume_attachment" "mc_ebs_volume_attach" {
-#   device_name = var.EBS_DEVICE_NAME
-#   volume_id   = aws_ebs_volume.mc_ebs_volume.id
-#   instance_id = aws_instance.mc_instance.id
-# }
+// EBS Volume attachment
+resource "aws_volume_attachment" "mc_ebs_volume_attach" {
+  device_name = var.EBS_DEVICE_NAME
+  volume_id   = aws_ebs_volume.mc_ebs_volume.id
+  instance_id = aws_instance.mc_instance.id
+}
 
-# // EBS Volume back up
-# resource "aws_ebs_snapshot" "mc_ebs_volume_snapshot" {
-#   volume_id = aws_ebs_volume.mc_ebs_volume.id
-#   storage_tier = var.EBS_SNAPSHOT_STORAGE_TIER
-# }
+// EBS Volume back up
+resource "aws_ebs_snapshot" "mc_ebs_volume_snapshot" {
+  volume_id = aws_ebs_volume.mc_ebs_volume.id
+  storage_tier = var.EBS_SNAPSHOT_STORAGE_TIER
+}
 
 // Lambda
 resource "aws_lambda_function" "vpc_logs_monitoring_lambda" {
