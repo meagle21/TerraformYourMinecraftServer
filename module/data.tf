@@ -1,6 +1,6 @@
 data "aws_ami" "MC_AMI" {
     owners = var.AMI_OWNER_NAME
-    most_recent = var.MOST_RECENT_BOOLEAN
+    most_recent = true
     include_deprecated = var.INCLUDE_DEPRECATION_BOOLEAN
     filter {
         name   = "name" 
