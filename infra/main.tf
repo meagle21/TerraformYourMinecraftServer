@@ -65,6 +65,7 @@ resource "aws_lambda_function" "vpc_logs_monitoring_lambda" {
   role          = aws_iam_role.mc_vpc_monitoring_lambda.arn
   handler       = "${var.LAMBDA_FUNCTION_NAME}.${var.LAMBDA_FUNCTION_HANDLER_NAME}"
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+  timeout = 60
   runtime = var.LAMBDA_RUNTIME_VERSION
 
    environment {
