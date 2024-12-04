@@ -26,17 +26,13 @@ variable instance_type {
 
 // HARD CODED VARIABLES, USE CAUTION WHEN UPDATING THESE VARIABLES
 
-locals {
-  default_az = "${var.default_region}a"
+variable AVAILABILITY_ZONE {
+    default = "a"
+    type = string
 }
 
 variable CIDR_BLOCK {
     default = "10.0.0.0/16"
-    type = string
-}
-
-variable default_az {
-    default = local.default_az
     type = string
 }
 

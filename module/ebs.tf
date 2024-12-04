@@ -1,6 +1,6 @@
 // EBS Volume
 resource "aws_ebs_volume" "mc_ebs_volume" {
-  availability_zone = var.default_az
+  availability_zone = "${var.default_region}${var.AVAILABILITY_ZONE}"
   size              = var.storage_volume_size
 }
 
