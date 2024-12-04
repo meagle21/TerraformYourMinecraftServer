@@ -1,7 +1,7 @@
 import boto3
 import os
 
-def vpc_monitoring(event, context):
+def vpc_monitoring_handler(event, context):
     client = boto3.client('logs')
 
     response = client.get_log_events(
