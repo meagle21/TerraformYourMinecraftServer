@@ -25,6 +25,12 @@ variable instance_type {
 
 
 // HARD CODED VARIABLES, USE CAUTION WHEN UPDATING THESE VARIABLES
+
+variable AVAILABILITY_ZONE {
+    default = "a"
+    type = string
+}
+
 variable CIDR_BLOCK {
     default = "10.0.0.0/16"
     type = string

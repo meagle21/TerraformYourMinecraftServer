@@ -5,13 +5,14 @@ resource "aws_lambda_function" "vpc_logs_monitoring_lambda" {
   role          = aws_iam_role.mc_vpc_monitoring_lambda.arn
   handler       = "${var.LAMBDA_FUNCTION_NAME}.${var.LAMBDA_FUNCTION_HANDLER_NAME}"
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
-  timeout = 60
+  timeout = 120
   runtime = var.LAMBDA_RUNTIME_VERSION
 
    environment {
     variables = {
       CLOUDWATCH_LOG_GROUP = var.CLOUDWATCH_LOG_GROUP
       LOG_STREAM_NAME = var.LOG_STREAM_NAME
+      INSTANCE_ID = aws_instance.mc_instance.id
     }
   }
 
