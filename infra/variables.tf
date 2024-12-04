@@ -81,7 +81,7 @@ variable ZIP {
 }
 
 variable LAMBDA_FUNCTION_HANDLER_NAME {
-    default = "vpc_monitoring"
+    default = "vpc_monitoring_handler"
     type = string
 }
 
