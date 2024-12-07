@@ -67,7 +67,7 @@ variable INCLUDE_DEPRECATION_BOOLEAN {
 }
 
 variable LAMBDA_PATH {
-    default = "monitoring_lambda"
+    default = "monitoring_lambdas"
     type = string
 }
 

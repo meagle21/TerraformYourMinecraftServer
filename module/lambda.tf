@@ -1,5 +1,29 @@
 // Lambda
-resource "aws_lambda_function" "vpc_logs_monitoring_lambda" {
+resource "aws_lambda_function" "turn_off_lambda" {
+  filename      = data.archive_file.lambda_zip.output_path
+  function_name = var.LAMBDA_FUNCTION_NAME
+  role          = aws_iam_role.mc_vpc_monitoring_lambda.arn
+  handler       = "${var.LAMBDA_FUNCTION_NAME}.${var.LAMBDA_FUNCTION_HANDLER_NAME}"
+  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+  timeout = 120
+  runtime = var.LAMBDA_RUNTIME_VERSION
+
+   environment {
+    variables = {
+      CLOUDWATCH_LOG_GROUP = var.CLOUDWATCH_LOG_GROUP
+      LOG_STREAM_NAME = var.LOG_STREAM_NAME
+      INSTANCE_ID = aws_instance.mc_instance.id
+    }
+  }
+
+  vpc_config {
+    subnet_ids = [aws_subnet.mc_vpc_subnet.id]
+    security_group_ids = [aws_security_group.mc_vpc_security_group.id]
+  }
+}
+
+// Lambda
+resource "aws_lambda_function" "turn_on_lambda" {
   filename      = data.archive_file.lambda_zip.output_path
   function_name = var.LAMBDA_FUNCTION_NAME
   role          = aws_iam_role.mc_vpc_monitoring_lambda.arn
